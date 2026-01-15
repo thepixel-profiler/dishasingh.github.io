@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disha Singh | Vajra Architect</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;500;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --surface: #0a0a0a;
+            --accent: #D4AF37; /* Vajra Gold */
+            --text-main: #e0e0e0;
+            --text-dim: #888;
+            --border: #222;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'JetBrains Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .citadel-frame {
+            width: 100%;
+            max-width: 800px;
+            border: 1px solid var(--border);
+            padding: 40px;
+            position: relative;
+            background: var(--surface);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        /* Gold accent corner */
+        .citadel-frame::before {
+            content: "";
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            width: 40px;
+            height: 40px;
+            border-top: 2px solid var(--accent);
+            border-left: 2px solid var(--accent);
+        }
+
+        header {
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .identity {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-top: 5px;
+        }
+
+        .manifesto {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            border-left: 2px solid var(--border);
+            padding-left: 20px;
+        }
+
+        .project-card {
+            background: #0f0f0f;
+            border: 1px solid var(--border);
+            padding: 25px;
+            margin-top: 30px;
+            transition: border 0.3s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 2px 8px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .terminal-text {
+            color: #00FF41; /* Matrix/Terminal Green */
+            font-size: 0.85rem;
+            margin-top: 40px;
+        }
+
+        nav {
+            margin-top: 50px;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border-bottom: 1px solid transparent;
+        }
+
+        nav a:hover {
+            border-bottom: 1px solid var(--accent);
+            color: var(--accent);
+        }
+
+        @media (max-width: 600px) {
+            .citadel-frame { padding: 20px; }
+            h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <main class="citadel-frame">
+        <header>
+            <h1>Disha Singh</h1>
+            <p class="identity">The Vajra Architect // Argent Dagger</p>
+        </header>
+
+        <section class="manifesto">
+            Commanding the universe through code. Transitioned from the beggarly mindset to technical sovereignty. Focused on <strong>Dharma, Integrity, and Wealth Creation.</strong>
+        </section>
+
+        <section class="flagship">
+            <div class="tag">Active Siege</div>
+            <div class="project-card">
+                <h3>The Dharma-Debt Nexus</h3>
+                <p style="font-size: 0.9rem; color: var(--text-dim); margin-top: 10px;">
+                    A Relational Intelligence engine using Graph Neural Networks (GNNs) to map social capital into creditworthiness. Banking the unbanked via Dharma.
+                </p>
+            </div>
+        </section>
+
+        <div class="terminal-text">
+            > system.status: BUILDING_CITADEL<br>
+            > location: dishasingh.xyz<br>
+            > freelance_mode: ACTIVE [$40-$80/hr]
+        </div>
+
+        <nav>
+            <a href="https://github.com/yourusername">GITHUB</a>
+            <a href="mailto:your-email@example.com">COMMUNICATIONS</a>
+            <a href="#">THE VAJRA LOGS (Coming Soon)</a>
+        </nav>
+    </main>
+
+</body>
+</html>
