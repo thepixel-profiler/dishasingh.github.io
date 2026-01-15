@@ -3,27 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disha Singh | AI/ML Engineer & Data Scientist</title>
+    <title>Disha Singh | AI/ML Engineer</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;500;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --bg-dark: #020205; 
-            --bg-glow: #0a0a1a;
-            --glass: rgba(12, 12, 12, 0.8);
-            --accent: #D4AF37; 
-            --text: #f0f0f0;
-            --text-dim: #a0a0a0;
-            --border: rgba(212, 175, 55, 0.15);
+            --bg-obsidian: #0f1115;      
+            --bg-charcoal: #1a1d23;      
+            --text-argent: #d1d5db;      
+            --accent-mint: #a7f3d0;      
+            --accent-lavender: #c4b5fd;  
+            --glass: rgba(26, 29, 35, 0.7);
+            --border: rgba(167, 243, 208, 0.15);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
 
         body {
-            background-color: var(--bg-dark);
-            background-image: 
-                radial-gradient(circle at 50% 40%, var(--bg-glow) 0%, var(--bg-dark) 80%),
-                url("https://www.transparenttextures.com/patterns/stardust.png");
-            color: var(--text);
+            background-color: var(--bg-obsidian);
+            color: var(--text-argent);
             font-family: 'JetBrains Mono', monospace;
             min-height: 100vh;
             display: flex;
@@ -32,6 +30,62 @@
             overflow-x: hidden;
         }
 
+        /* RAIN CANVAS */
+        #rainCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Behind everything */
+            pointer-events: none;
+        }
+
+        /* SIDEBARS */
+        .sidebar-left {
+            position: fixed;
+            left: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            z-index: 1001;
+        }
+
+        .sidebar-left a {
+            color: var(--text-argent);
+            font-size: 1.5rem;
+            opacity: 0.6;
+            transition: 0.3s;
+        }
+
+        .sidebar-left a:hover {
+            color: var(--accent-mint);
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        .sidebar-right {
+            position: fixed;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 180px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            backdrop-filter: blur(10px);
+            z-index: 1001;
+        }
+
+        .status-header { color: var(--accent-mint); text-transform: uppercase; margin-bottom: 10px; font-weight: 800; }
+        .status-item { margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px; }
+        .status-value { color: var(--accent-lavender); display: block; }
+
+        /* NAVIGATION */
         .nav-wrapper {
             position: fixed;
             top: 35px;
@@ -39,105 +93,104 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
-            width: 100%;
+            gap: 15px;
         }
 
         .main-nav, .sub-nav {
-            background: rgba(18, 18, 18, 0.6);
+            background: var(--glass);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border);
             border-radius: 100px;
-            padding: 10px 14px;
+            padding: 8px 12px;
             display: flex;
-            gap: 12px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
+            gap: 10px;
         }
 
         button {
             background: none;
             border: none;
-            color: var(--text-dim);
+            color: #888;
             font-family: 'JetBrains Mono';
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 2px;
-            padding: 10px 22px;
+            padding: 8px 18px;
             border-radius: 100px;
         }
 
-        .main-nav button.active {
-            background: rgba(212, 175, 55, 0.15);
-            color: var(--accent);
+        button.active {
+            background: rgba(167, 243, 208, 0.1);
+            color: var(--accent-mint);
             font-weight: 800;
         }
 
-        .sub-nav button.active {
-            color: var(--text);
-            border-bottom: 2px solid var(--accent);
-            border-radius: 0;
-        }
-
+        /* CONTENT AREA */
         .content-area {
-            margin-top: 230px;
-            width: 90%;
-            max-width: 850px;
+            margin-top: 220px;
+            width: 85%;
+            max-width: 800px;
             background: var(--glass);
             backdrop-filter: blur(30px);
             border: 1px solid var(--border);
-            padding: 60px;
-            border-radius: 32px;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.9);
+            padding: 50px;
+            border-radius: 24px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
             margin-bottom: 80px;
         }
 
-        .section { display: none; animation: fadeIn 0.8s ease forwards; }
+        .section { display: none; animation: fadeIn 0.6s ease forwards; }
         .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        h2 {
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font-size: 1.3rem;
-            margin-bottom: 30px;
-            border-left: 3px solid var(--accent);
-            padding-left: 20px;
+        h2 { color: var(--accent-mint); letter-spacing: 4px; margin-bottom: 25px; border-left: 3px solid var(--accent-mint); padding-left: 15px; }
+        p { line-height: 1.8; color: #abb1bf; margin-bottom: 15px; font-size: 0.9rem; }
+        
+        .project-card { 
+            background: rgba(255, 255, 255, 0.02); 
+            border: 1px solid var(--border); 
+            padding: 20px; 
+            border-radius: 12px; 
+            margin-top: 15px; 
+            border-right: 3px solid var(--accent-lavender); 
         }
 
-        p { line-height: 1.8; color: var(--text-dim); margin-bottom: 20px; font-size: 0.95rem; }
-        strong { color: var(--text); font-weight: 500; }
+        .cert-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem; }
+        .cert-link { color: var(--accent-mint); text-decoration: none; border: 1px solid var(--accent-mint); padding: 2px 8px; border-radius: 4px; font-size: 0.65rem; }
         .hidden { display: none !important; }
-
-        .project-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            padding: 25px;
-            border-radius: 12px;
-            margin-top: 20px;
-            border-left: 2px solid var(--accent);
-        }
     </style>
 </head>
 <body>
 
+    <canvas id="rainCanvas"></canvas>
+
+    <div class="sidebar-left">
+        <a href="https://github.com/thepixel-profiler" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/disha2003/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="#" target="_blank" title="Upwork"><i class="fas fa-briefcase"></i></a>
+        <a href="#" target="_blank" title="Gumroad"><i class="fas fa-store"></i></a>
+    </div>
+
+    <div class="sidebar-right">
+        <div class="status-header">System Metrics</div>
+        <div class="status-item">Availability<span class="status-value">Active Freelance</span></div>
+        <div class="status-item">Current Build<span class="status-value">Dharma-Debt Nexus</span></div>
+        <div class="status-item">Focus Stack<span class="status-value">PyTorch / GNN</span></div>
+        <div class="status-item">Location<span class="status-value">Punjab, IN</span> </div>
+    </div>
+
     <div class="nav-wrapper">
         <nav class="main-nav">
             <button id="nav-portfolio" class="active" onclick="switchMain('portfolio')">Portfolio</button>
-            <button id="nav-blog" onclick="switchMain('blog')">Research Logs</button>
+            <button id="nav-blog" onclick="switchMain('blog')">Engineering Logs</button>
         </nav>
-
         <nav id="sub-portfolio" class="sub-nav">
             <button class="active" onclick="showSection('about')">Profile</button>
-            <button onclick="showSection('projects')">Projects</button>
+            <button onclick="showSection('projects')">Research</button>
             <button onclick="showSection('qualifications')">Experience</button>
             <button onclick="showSection('skills')">Weaponry</button>
             <button onclick="showSection('contact')">Connect</button>
         </nav>
-
         <nav id="sub-blog" class="sub-nav hidden">
             <button onclick="showSection('blog-about')">Philosophy</button>
             <button onclick="showSection('posts')">Technical Log</button>
@@ -146,78 +199,115 @@
     </div>
 
     <main class="content-area">
-        
         <section id="about" class="section active">
             <h2>Disha Singh</h2>
-            <p>I am an <strong>AI/ML Engineer & Data Scientist</strong> focused on the intersection of Graph Neural Networks (GNNs) and Relational Intelligence. I build systems that transform unstructured network data into actionable, high-integrity insights.</p>
-            <p>Driven by <strong>Dharma and Technical Excellence</strong>, I architect end-to-end ML pipelines with a focus on interpretability and socio-economic impact.</p>
+            <p>I am an <strong>AI/ML Engineer & Data Scientist</strong> specializing in relational data intelligence.</p>
+            <p>I am currently pursuing a Masters in Artificial Intelligence/Machine Learning at Lovely Professional University.</p>
+            <p>During my undergraduate studies in Big Data Analytics, I maintained a cumulative GPA of 8.58.</p>
         </section>
 
         <section id="projects" class="section">
-            <h2>Core Projects</h2>
+            <h2>Core Initiatives</h2>
             <div class="project-card">
-                <h3>The Dharma-Debt Nexus</h3>
-                <p><strong>Lead Architect.</strong> Developing a Socio-Cultural Relational Credit engine using <strong>PyTorch Geometric</strong>. The project utilizes <strong>SAGEConv and GATv2 layers</strong> to quantify social capital and "bank the unbanked" through non-traditional credit signals.</p>
+                <h3>The Dharma-Debt Nexus</h3> 
+                <p>Architecting Graph Neural Network (GNN) models using PyTorch Geometric to synthesize "Relational Trust" metrics.</p>
+                <p>The system is projected to outperform baseline logistic models in default prediction by 18%.</p>
             </div>
             <div class="project-card">
-                <h3>Scalable Graph Pipelines</h3>
-                <p>Optimizing large-scale network data processing using <strong>NetworkX</strong> and <strong>GraphSAGE</strong>, focusing on inductive representation learning for dynamic social graphs.</p>
+                <h3>CFO-GPT</h3>
+                <p>Engineered a Full-Stack RAG application using Python, LangChain, and OpenAI to analyze complex financial documents.</p>
             </div>
         </section>
 
         <section id="qualifications" class="section">
-            <h2>Background & Ambition</h2>
-            <p><strong>Machine Learning Specialist:</strong> Currently refining advanced deep learning techniques in Graph representation. Seeking a <strong>Pre-Placement Offer (PPO)</strong> at industry leaders like <strong>Microsoft</strong> or <strong>Adobe</strong> to deploy high-impact AI solutions.</p>
-            <p>Committed to rigorous mathematical foundations and clean, scalable code architecture.</p>
+            <h2>Experience & Certificates</h2>
+            <p><strong>MCA - AI/ML Candidate</strong> | Lovely Professional University </p>
+            <p><strong>BCA - Big Data Analytics (8.58 CGPA)</strong> | Lovely Professional University </p>
+            <p><strong>Leadership:</strong> President of Accenture Emph Student Club (Mar 2024 - Jun 2025).</p>
+
+            <h3 style="color:var(--accent-lavender); margin: 25px 0 15px 0; font-size: 0.8rem;">CERTIFICATES</h3>
+            <div class="cert-item"><span>Big Data Architecture (IBM)</span> <a href="#" class="cert-link">VERIFY</a> </div>
+            <div class="cert-item"><span>Microservices Architecture (IBM)</span> <a href="#" class="cert-link">VERIFY</a> </div>
+            <div class="cert-item"><span>Business Intelligence (IBM)</span> <a href="#" class="cert-link">VERIFY</a> </div>
+            <div class="cert-item"><span>Front End Web Development (Sparta)</span> <a href="#" class="cert-link">VERIFY</a> </div>
         </section>
 
         <section id="skills" class="section">
             <h2>Technical Weaponry</h2>
-            <p><strong>Neural Architectures:</strong> GNNs (PyG, DGL), Transformers, CNNs, LSTMs.</p>
-            <p><strong>Data Science:</strong> Python (PyTorch, TensorFlow, Scikit-Learn), SQL, Pandas, NumPy.</p>
-            <p><strong>Infrastructure:</strong> Git, Docker, Streamlit, Linux, MLflow.</p>
-        </section>
-
-        <section id="blog-about" class="section">
-            <h2>Research Philosophy</h2>
-            <p>This space documents my technical and ethical journey in Data Science. I believe that <strong>Integrity is the ultimate metric</strong>—my logs explore how we can code systems that reflect human values and create sustainable wealth through data.</p>
-        </section>
-
-        <section id="posts" class="section">
-            <h2>Technical Notes</h2>
-            <p><strong>[Log 01-15-2026]:</strong> Establishing the Digital Citadel. Transitioning from abstract ML theory to scalable architectural deployment.</p>
-            <p><strong>[Log 01-14-2026]:</strong> Defining Node Features for Relational Capital. Why Inductive Learning is the future of Fintech.</p>
+            <p><strong>Languages:</strong> Python, SQL, Java, C++.</p>
+            <p><strong>Intelligence:</strong> Pandas, NumPy, Scikit-Learn, LangChain, NLP.</p>
+            <p><strong>Frameworks:</strong> PyTorch Geometric, Captum (XAI), FastAPI.</p>
+            <p><strong>Tools:</strong> Git, GitHub, Streamlit, FAISS.</p>
         </section>
 
         <section id="contact" class="section">
-            <h2>Secure Transmission</h2>
-            <p>Available for <strong>High-Level AI/ML Freelancing</strong> and Research Collaborations.</p>
-            <p>Direct: <strong style="color:var(--accent)">admin@dishasingh.xyz</strong></p>
+            <h2>Secure Channel</h2>
+            <p>Email: <strong style="color:var(--accent-mint)">dishasingh4210@gmail.com</strong></p>
+            <p>LinkedIn: <a href="https://www.linkedin.com/in/disha2003/" target="_blank" style="color:var(--text-argent)">disha2003</a></p>
         </section>
-
-        <section id="contact-blog" class="section">
-            <h2>Engineering Collaboration</h2>
-            <p>Reach out for discussions regarding Relational Intelligence or Graph Theory.</p>
-        </section>
-
     </main>
 
     <script>
+        // RAIN LOGIC
+        const canvas = document.getElementById('rainCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, drops;
+
+        function initRain() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            drops = [];
+            for (let i = 0; i < 150; i++) {
+                drops.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    length: Math.random() * 20 + 10,
+                    speed: Math.random() * 5 + 2,
+                    opacity: Math.random() * 0.3
+                });
+            }
+        }
+
+        function drawRain() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.strokeStyle = 'rgba(167, 243, 208, 0.4)'; // Mint pastel rain
+            ctx.lineWidth = 1;
+            ctx.lineCap = 'round';
+
+            drops.forEach(d => {
+                ctx.beginPath();
+                ctx.moveTo(d.x, d.y);
+                ctx.lineTo(d.x, d.y + d.length);
+                ctx.stroke();
+
+                d.y += d.speed;
+                if (d.y > height) {
+                    d.y = -d.length;
+                    d.x = Math.random() * width;
+                }
+            });
+            requestAnimationFrame(drawRain);
+        }
+
+        window.addEventListener('resize', initRain);
+        initRain();
+        drawRain();
+
+        // NAV LOGIC
         function switchMain(mode) {
             document.querySelectorAll('.main-nav button').forEach(btn => btn.classList.remove('active'));
             document.getElementById('nav-' + mode).classList.add('active');
             const subPort = document.getElementById('sub-portfolio');
             const subBlog = document.getElementById('sub-blog');
             if(mode === 'portfolio') {
-                subPort.classList.remove('hidden');
-                subBlog.classList.add('hidden');
+                subPort.classList.remove('hidden'); subBlog.classList.add('hidden');
                 showSection('about');
             } else {
-                subPort.classList.add('hidden');
-                subBlog.classList.remove('hidden');
+                subPort.classList.add('hidden'); subBlog.classList.remove('hidden');
                 showSection('blog-about');
             }
         }
+
         function showSection(id) {
             document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
             const target = document.getElementById(id);
