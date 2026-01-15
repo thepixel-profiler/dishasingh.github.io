@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disha Singh | AI/ML Engineer</title>
+    <title>Disha Singh | AI/ML Architect</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;500;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --bg-obsidian: #0f1115;      
-            --bg-charcoal: #1a1d23;      
             --text-argent: #d1d5db;      
             --accent-mint: #a7f3d0;      
             --accent-lavender: #c4b5fd;  
@@ -30,153 +29,84 @@
             overflow-x: hidden;
         }
 
-        /* RAIN CANVAS */
-        #rainCanvas {
+        #rainCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+
+        /* STREET LINE AT BOTTOM */
+        .street-line {
             position: fixed;
-            top: 0;
+            bottom: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            z-index: -1; /* Behind everything */
-            pointer-events: none;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-mint), transparent);
+            opacity: 0.3;
+            z-index: 1;
         }
 
-        /* SIDEBARS */
-        .sidebar-left {
-            position: fixed;
-            left: 40px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            z-index: 1001;
+        /* --- FLOATING VAJRA LOGO --- */
+        .floating-logo {
+            position: fixed; top: 30px; left: 30px; width: 60px; height: 60px; z-index: 2000;
+            animation: sway 6s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(167, 243, 208, 0.3));
         }
+        @keyframes sway { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-10px) rotate(2deg); } }
 
-        .sidebar-left a {
-            color: var(--text-argent);
-            font-size: 1.5rem;
-            opacity: 0.6;
-            transition: 0.3s;
-        }
-
-        .sidebar-left a:hover {
-            color: var(--accent-mint);
-            opacity: 1;
-            transform: scale(1.2);
-        }
+        /* --- SIDEBARS --- */
+        .sidebar-left { position: fixed; left: 40px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 25px; z-index: 1001; }
+        .sidebar-left a { color: var(--text-argent); font-size: 1.5rem; opacity: 0.4; }
+        .sidebar-left a:hover { color: var(--accent-mint); opacity: 1; transform: scale(1.2); }
 
         .sidebar-right {
-            position: fixed;
-            right: 40px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 180px;
-            background: var(--glass);
-            border: 1px solid var(--border);
-            padding: 20px;
-            border-radius: 15px;
-            font-size: 0.7rem;
-            backdrop-filter: blur(10px);
-            z-index: 1001;
+            position: fixed; right: 40px; top: 50%; transform: translateY(-50%);
+            width: 180px; background: var(--glass); border: 1px solid var(--border);
+            padding: 20px; border-radius: 15px; font-size: 0.7rem; backdrop-filter: blur(10px); z-index: 1001;
         }
 
         .status-header { color: var(--accent-mint); text-transform: uppercase; margin-bottom: 10px; font-weight: 800; }
         .status-item { margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px; }
         .status-value { color: var(--accent-lavender); display: block; }
 
-        /* NAVIGATION */
-        .nav-wrapper {
-            position: fixed;
-            top: 35px;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
+        /* --- NAVIGATION --- */
+        .nav-wrapper { position: fixed; top: 35px; z-index: 1000; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .main-nav, .sub-nav { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 100px; padding: 8px 12px; display: flex; gap: 10px; }
+        button { background: none; border: none; color: #666; font-family: 'JetBrains Mono'; font-size: 0.7rem; cursor: pointer; text-transform: uppercase; padding: 8px 18px; border-radius: 100px; }
+        button.active { background: rgba(167, 243, 208, 0.1); color: var(--accent-mint); font-weight: 800; }
 
-        .main-nav, .sub-nav {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 100px;
-            padding: 8px 12px;
-            display: flex;
-            gap: 10px;
-        }
-
-        button {
-            background: none;
-            border: none;
-            color: #888;
-            font-family: 'JetBrains Mono';
-            font-size: 0.7rem;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            padding: 8px 18px;
-            border-radius: 100px;
-        }
-
-        button.active {
-            background: rgba(167, 243, 208, 0.1);
-            color: var(--accent-mint);
-            font-weight: 800;
-        }
-
-        /* CONTENT AREA */
-        .content-area {
-            margin-top: 220px;
-            width: 85%;
-            max-width: 800px;
-            background: var(--glass);
-            backdrop-filter: blur(30px);
-            border: 1px solid var(--border);
-            padding: 50px;
-            border-radius: 24px;
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
-            margin-bottom: 80px;
-        }
-
+        /* --- CONTENT --- */
+        .content-area { margin-top: 220px; width: 85%; max-width: 800px; background: var(--glass); backdrop-filter: blur(30px); border: 1px solid var(--border); padding: 50px; border-radius: 24px; box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5); margin-bottom: 150px; z-index: 2; }
         .section { display: none; animation: fadeIn 0.6s ease forwards; }
         .section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         h2 { color: var(--accent-mint); letter-spacing: 4px; margin-bottom: 25px; border-left: 3px solid var(--accent-mint); padding-left: 15px; }
         p { line-height: 1.8; color: #abb1bf; margin-bottom: 15px; font-size: 0.9rem; }
-        
-        .project-card { 
-            background: rgba(255, 255, 255, 0.02); 
-            border: 1px solid var(--border); 
-            padding: 20px; 
-            border-radius: 12px; 
-            margin-top: 15px; 
-            border-right: 3px solid var(--accent-lavender); 
-        }
-
-        .cert-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem; }
-        .cert-link { color: var(--accent-mint); text-decoration: none; border: 1px solid var(--accent-mint); padding: 2px 8px; border-radius: 4px; font-size: 0.65rem; }
-        .hidden { display: none !important; }
+        .project-card { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); padding: 20px; border-radius: 12px; margin-top: 15px; border-right: 3px solid var(--accent-lavender); }
     </style>
 </head>
 <body>
 
     <canvas id="rainCanvas"></canvas>
+    <div class="street-line"></div>
+
+    <div class="floating-logo">
+        <svg viewBox="0 0 100 100" fill="none">
+            <path d="M55 10 L35 55 H50 L45 90 L65 45 H50 L55 10Z" fill="var(--accent-mint)"/>
+            <circle cx="55" cy="10" r="3" fill="var(--accent-lavender)" />
+            <circle cx="45" cy="90" r="3" fill="var(--accent-lavender)" />
+        </svg>
+    </div>
 
     <div class="sidebar-left">
-        <a href="https://github.com/thepixel-profiler" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/disha2003/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-        <a href="https://www.upwork.com/freelancers/~01615bfa3dbc1d85ee" target="Upwork" title="Upwork"><i class="fas fa-briefcase"></i></a>
-        <a href="https://framedmonochrome.gumroad.com/" target="_blank" title="Gumroad"><i class="fas fa-store"></i></a>
+        <a href="https://github.com/thepixel-profiler" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/disha2003/" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.upwork.com/freelancers/~01615bfa3dbc1d85ee" target="_blank"><i class="fas fa-briefcase"></i></a>
     </div>
 
     <div class="sidebar-right">
-        <div class="status-header">System Metrics</div>
+        <div class="status-header">Vajra Metrics</div>
         <div class="status-item">Availability<span class="status-value">Active Freelance</span></div>
-        <div class="status-item">Current Build<span class="status-value">Dharma-Debt Nexus</span></div>
-        <div class="status-item">Focus Stack<span class="status-value">PyTorch / GNN</span></div>
-        <div class="status-item">Location<span class="status-value">Punjab, IN</span> </div>
+        <div class="status-item">Focus Stack<span class="status-value">GNN / PyTorch</span></div>
+        <div class="status-item">Location<span class="status-value">Punjab, IN</span></div>
     </div>
 
     <div class="nav-wrapper">
@@ -191,53 +121,41 @@
             <button onclick="showSection('skills')">Weaponry</button>
             <button onclick="showSection('contact')">Connect</button>
         </nav>
-        <nav id="sub-blog" class="sub-nav hidden">
-            <button onclick="showSection('blog-about')">Philosophy</button>
-            <button onclick="showSection('posts')">Technical Log</button>
-            <button onclick="showSection('contact-blog')">Inquiries</button>
-        </nav>
     </div>
 
     <main class="content-area">
         <section id="about" class="section active">
             <h2>Disha Singh</h2>
-            <p>I am an <strong>AI/ML Engineer & Data Scientist</strong> specializing in relational data intelligence.</p>
-            <p>I am currently pursuing a Masters in Artificial Intelligence/Machine Learning at Lovely Professional University.</p>
-            <p>During my undergraduate studies in Big Data Analytics, I maintained a cumulative GPA of 8.58.</p>
+            <p>I am an <strong>AI/ML Engineer</strong> specializing in relational data intelligence.</p>
+            <p>Master's candidate at Lovely Professional University. My research focuses on leveraging <strong>Graph Neural Networks</strong> to automate risk assessment in complex financial ecosystems.</p>
         </section>
 
         <section id="projects" class="section">
             <h2>Core Initiatives</h2>
             <div class="project-card">
-                <h3>The Dharma-Debt Nexus</h3> 
-                <p>Architecting Graph Neural Network (GNN) models using PyTorch Geometric to synthesize "Relational Trust" metrics.</p>
-                <p>The system is projected to outperform baseline logistic models in default prediction by 18%.</p>
+                <h3>The Dharma-Debt Nexus</h3>
+                <p>Architecting **GNN** models using **PyTorch Geometric** for non-traditional credit scoring; projected to outperform baseline models by **18%**.</p>
             </div>
             <div class="project-card">
                 <h3>CFO-GPT</h3>
-                <p>Engineered a Full-Stack RAG application using Python, LangChain, and OpenAI to analyze complex financial documents.</p>
+                <p>Full-stack **RAG** application processing financial documents via **LangChain** and **OpenAI**.</p>
             </div>
         </section>
 
         <section id="qualifications" class="section">
             <h2>Experience & Certificates</h2>
-            <p><strong>MCA - AI/ML Candidate</strong> | Lovely Professional University </p>
-            <p><strong>BCA - Big Data Analytics (8.58 CGPA)</strong> | Lovely Professional University </p>
-            <p><strong>Leadership:</strong> President of Accenture Emph Student Club (Mar 2024 - Jun 2025).</p>
-
-            <h3 style="color:var(--accent-lavender); margin: 25px 0 15px 0; font-size: 0.8rem;">CERTIFICATES</h3>
-            <div class="cert-item"><span>Big Data Architecture (IBM)</span> <a href="#" class="cert-link">VERIFY</a> </div>
-            <div class="cert-item"><span>Microservices Architecture (IBM)</span> <a href="#" class="cert-link">VERIFY</a> </div>
-            <div class="cert-item"><span>Business Intelligence (IBM)</span> <a href="#" class="cert-link">VERIFY</a> </div>
-            <div class="cert-item"><span>Front End Web Development (Sparta)</span> <a href="#" class="cert-link">VERIFY</a> </div>
+            <p><strong>MCA - AI/ML Candidate</strong> | Lovely Professional University</p>
+            <p><strong>BCA - Big Data Analytics</strong> | 8.58 CGPA</p>
+            <div class="project-card">
+                <div style="font-size: 0.8rem; opacity: 0.8;">IBM CERTIFICATIONS:</div>
+                <p>Big Data Architecture, Microservices, Business Intelligence, Text Analytics.</p>
+            </div>
         </section>
 
         <section id="skills" class="section">
             <h2>Technical Weaponry</h2>
             <p><strong>Languages:</strong> Python, SQL, Java, C++.</p>
-            <p><strong>Intelligence:</strong> Pandas, NumPy, Scikit-Learn, LangChain, NLP.</p>
-            <p><strong>Frameworks:</strong> PyTorch Geometric, Captum (XAI), FastAPI.</p>
-            <p><strong>Tools:</strong> Git, GitHub, Streamlit, FAISS.</p>
+            <p><strong>Frameworks:</strong> PyTorch Geometric, LangChain, FastAPI, Scikit-Learn.</p>
         </section>
 
         <section id="contact" class="section">
@@ -248,32 +166,32 @@
     </main>
 
     <script>
-        // RAIN LOGIC
         const canvas = document.getElementById('rainCanvas');
         const ctx = canvas.getContext('2d');
-        let width, height, drops;
+        let width, height, drops, splashes;
 
         function initRain() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
             drops = [];
+            splashes = [];
             for (let i = 0; i < 150; i++) {
                 drops.push({
                     x: Math.random() * width,
                     y: Math.random() * height,
                     length: Math.random() * 20 + 10,
-                    speed: Math.random() * 5 + 2,
-                    opacity: Math.random() * 0.3
+                    speed: Math.random() * 5 + 4
                 });
             }
         }
 
         function drawRain() {
             ctx.clearRect(0, 0, width, height);
-            ctx.strokeStyle = 'rgba(167, 243, 208, 0.4)'; // Mint pastel rain
+            
+            // Draw Drops
+            ctx.strokeStyle = 'rgba(167, 243, 208, 0.4)';
             ctx.lineWidth = 1;
             ctx.lineCap = 'round';
-
             drops.forEach(d => {
                 ctx.beginPath();
                 ctx.moveTo(d.x, d.y);
@@ -281,11 +199,35 @@
                 ctx.stroke();
 
                 d.y += d.speed;
-                if (d.y > height) {
+
+                // Splash logic: when drop hits the bottom
+                if (d.y > height - 5) {
+                    splashes.push({
+                        x: d.x,
+                        y: height - 2,
+                        r: 1,
+                        opacity: 1
+                    });
                     d.y = -d.length;
                     d.x = Math.random() * width;
                 }
             });
+
+            // Draw Splashes (Ripples)
+            splashes.forEach((s, index) => {
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(167, 243, 208, ${s.opacity})`;
+                ctx.ellipse(s.x, s.y, s.r, s.r * 0.3, 0, 0, Math.PI * 2);
+                ctx.stroke();
+
+                s.r += 1.5;
+                s.opacity -= 0.05;
+
+                if (s.opacity <= 0) {
+                    splashes.splice(index, 1);
+                }
+            });
+
             requestAnimationFrame(drawRain);
         }
 
@@ -293,26 +235,17 @@
         initRain();
         drawRain();
 
-        // NAV LOGIC
         function switchMain(mode) {
             document.querySelectorAll('.main-nav button').forEach(btn => btn.classList.remove('active'));
             document.getElementById('nav-' + mode).classList.add('active');
-            const subPort = document.getElementById('sub-portfolio');
-            const subBlog = document.getElementById('sub-blog');
-            if(mode === 'portfolio') {
-                subPort.classList.remove('hidden'); subBlog.classList.add('hidden');
-                showSection('about');
-            } else {
-                subPort.classList.add('hidden'); subBlog.classList.remove('hidden');
-                showSection('blog-about');
-            }
+            showSection('about');
         }
 
         function showSection(id) {
             document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
             const target = document.getElementById(id);
             if(target) target.classList.add('active');
-            if (event && event.target && event.target.tagName === 'BUTTON') {
+            if (event?.target?.tagName === 'BUTTON') {
                 document.querySelectorAll('.sub-nav button').forEach(btn => btn.classList.remove('active'));
                 event.target.classList.add('active');
             }
