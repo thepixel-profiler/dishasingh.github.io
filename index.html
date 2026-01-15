@@ -3,168 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disha Singh | Vajra Architect</title>
+    <title>Disha Singh | AI/ML Engineer & Data Scientist</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;500;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #050505;
-            --surface: #0a0a0a;
-            --accent: #D4AF37; /* Vajra Gold */
-            --text-main: #e0e0e0;
-            --text-dim: #888;
-            --border: #222;
+            --bg-dark: #020205; 
+            --bg-glow: #0a0a1a;
+            --glass: rgba(12, 12, 12, 0.8);
+            --accent: #D4AF37; 
+            --text: #f0f0f0;
+            --text-dim: #a0a0a0;
+            --border: rgba(212, 175, 55, 0.15);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
 
         body {
-            background-color: var(--bg);
-            color: var(--text-main);
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 50% 40%, var(--bg-glow) 0%, var(--bg-dark) 80%),
+                url("https://www.transparenttextures.com/patterns/stardust.png");
+            color: var(--text);
             font-family: 'JetBrains Mono', monospace;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
         }
 
-        .citadel-frame {
+        .nav-wrapper {
+            position: fixed;
+            top: 35px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
             width: 100%;
-            max-width: 800px;
+        }
+
+        .main-nav, .sub-nav {
+            background: rgba(18, 18, 18, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border);
-            padding: 40px;
-            position: relative;
-            background: var(--surface);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border-radius: 100px;
+            padding: 10px 14px;
+            display: flex;
+            gap: 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
         }
 
-        /* Gold accent corner */
-        .citadel-frame::before {
-            content: "";
-            position: absolute;
-            top: -1px;
-            left: -1px;
-            width: 40px;
-            height: 40px;
-            border-top: 2px solid var(--accent);
-            border-left: 2px solid var(--accent);
-        }
-
-        header {
-            margin-bottom: 60px;
-        }
-
-        h1 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            text-transform: uppercase;
-            color: var(--accent);
-        }
-
-        .identity {
-            font-size: 0.9rem;
+        button {
+            background: none;
+            border: none;
             color: var(--text-dim);
-            margin-top: 5px;
+            font-family: 'JetBrains Mono';
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 10px 22px;
+            border-radius: 100px;
         }
 
-        .manifesto {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 40px;
-            border-left: 2px solid var(--border);
+        .main-nav button.active {
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        .sub-nav button.active {
+            color: var(--text);
+            border-bottom: 2px solid var(--accent);
+            border-radius: 0;
+        }
+
+        .content-area {
+            margin-top: 230px;
+            width: 90%;
+            max-width: 850px;
+            background: var(--glass);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--border);
+            padding: 60px;
+            border-radius: 32px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.9);
+            margin-bottom: 80px;
+        }
+
+        .section { display: none; animation: fadeIn 0.8s ease forwards; }
+        .section.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        h2 {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            border-left: 3px solid var(--accent);
             padding-left: 20px;
         }
 
+        p { line-height: 1.8; color: var(--text-dim); margin-bottom: 20px; font-size: 0.95rem; }
+        strong { color: var(--text); font-weight: 500; }
+        .hidden { display: none !important; }
+
         .project-card {
-            background: #0f0f0f;
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border);
             padding: 25px;
-            margin-top: 30px;
-            transition: border 0.3s ease;
-        }
-
-        .project-card:hover {
-            border-color: var(--accent);
-        }
-
-        .tag {
-            font-size: 0.7rem;
-            color: var(--accent);
-            border: 1px solid var(--accent);
-            padding: 2px 8px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            display: inline-block;
-        }
-
-        .terminal-text {
-            color: #00FF41; /* Matrix/Terminal Green */
-            font-size: 0.85rem;
-            margin-top: 40px;
-        }
-
-        nav {
-            margin-top: 50px;
-            display: flex;
-            gap: 20px;
-        }
-
-        nav a {
-            color: var(--text-main);
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 500;
-            border-bottom: 1px solid transparent;
-        }
-
-        nav a:hover {
-            border-bottom: 1px solid var(--accent);
-            color: var(--accent);
-        }
-
-        @media (max-width: 600px) {
-            .citadel-frame { padding: 20px; }
-            h1 { font-size: 1.4rem; }
+            border-radius: 12px;
+            margin-top: 20px;
+            border-left: 2px solid var(--accent);
         }
     </style>
 </head>
 <body>
 
-    <main class="citadel-frame">
-        <header>
-            <h1>Disha Singh</h1>
-            <p class="identity">The AI/ML Specialist</p>
-        </header>
-
-        <section class="manifesto">
-            Commanding the universe through code. Transitioning to technical sovereignty. Focused on social contribution and solving real world problems
-        </section>
-
-        <section class="command-history">
-            <div class="tag">System Logs</div>
-                <div class="log-entry">
-                    <span class="accent-text">2026-01-14:</span> Domain dishasingh.xyz established.
-                </div>
-            <div class="log-entry">
-                <span class="accent-text">2026-01-15:</span> Infrastructure hardened via GitHub Actions.
-            </div>
-            <div class="log-entry">
-                <span class="accent-text">Status:</span> Building the Citadel...
-            </div>
-        </section>
-        <div class="terminal-text">
-            > system.status: BUILDING_CITADEL<br>
-            > location: dishasingh.xyz<br>
-            > freelance_mode: ACTIVE [$20-$40/hr]
-        </div>
-
-        <nav>
-            <a href="https://github.com/thepixel-profiler">GITHUB</a>
-            <a href="mailto:blacknwhiteframed@gmail.com">COMMUNICATIONS</a>
-            <a href="#">THE LOGS (Coming Soon)</a>
+    <div class="nav-wrapper">
+        <nav class="main-nav">
+            <button id="nav-portfolio" class="active" onclick="switchMain('portfolio')">Portfolio</button>
+            <button id="nav-blog" onclick="switchMain('blog')">Research Logs</button>
         </nav>
+
+        <nav id="sub-portfolio" class="sub-nav">
+            <button class="active" onclick="showSection('about')">Profile</button>
+            <button onclick="showSection('projects')">Projects</button>
+            <button onclick="showSection('qualifications')">Experience</button>
+            <button onclick="showSection('skills')">Weaponry</button>
+            <button onclick="showSection('contact')">Connect</button>
+        </nav>
+
+        <nav id="sub-blog" class="sub-nav hidden">
+            <button onclick="showSection('blog-about')">Philosophy</button>
+            <button onclick="showSection('posts')">Technical Log</button>
+            <button onclick="showSection('contact-blog')">Inquiries</button>
+        </nav>
+    </div>
+
+    <main class="content-area">
+        
+        <section id="about" class="section active">
+            <h2>Disha Singh</h2>
+            <p>I am an <strong>AI/ML Engineer & Data Scientist</strong> focused on the intersection of Graph Neural Networks (GNNs) and Relational Intelligence. I build systems that transform unstructured network data into actionable, high-integrity insights.</p>
+            <p>Driven by <strong>Dharma and Technical Excellence</strong>, I architect end-to-end ML pipelines with a focus on interpretability and socio-economic impact.</p>
+        </section>
+
+        <section id="projects" class="section">
+            <h2>Core Projects</h2>
+            <div class="project-card">
+                <h3>The Dharma-Debt Nexus</h3>
+                <p><strong>Lead Architect.</strong> Developing a Socio-Cultural Relational Credit engine using <strong>PyTorch Geometric</strong>. The project utilizes <strong>SAGEConv and GATv2 layers</strong> to quantify social capital and "bank the unbanked" through non-traditional credit signals.</p>
+            </div>
+            <div class="project-card">
+                <h3>Scalable Graph Pipelines</h3>
+                <p>Optimizing large-scale network data processing using <strong>NetworkX</strong> and <strong>GraphSAGE</strong>, focusing on inductive representation learning for dynamic social graphs.</p>
+            </div>
+        </section>
+
+        <section id="qualifications" class="section">
+            <h2>Background & Ambition</h2>
+            <p><strong>Machine Learning Specialist:</strong> Currently refining advanced deep learning techniques in Graph representation. Seeking a <strong>Pre-Placement Offer (PPO)</strong> at industry leaders like <strong>Microsoft</strong> or <strong>Adobe</strong> to deploy high-impact AI solutions.</p>
+            <p>Committed to rigorous mathematical foundations and clean, scalable code architecture.</p>
+        </section>
+
+        <section id="skills" class="section">
+            <h2>Technical Weaponry</h2>
+            <p><strong>Neural Architectures:</strong> GNNs (PyG, DGL), Transformers, CNNs, LSTMs.</p>
+            <p><strong>Data Science:</strong> Python (PyTorch, TensorFlow, Scikit-Learn), SQL, Pandas, NumPy.</p>
+            <p><strong>Infrastructure:</strong> Git, Docker, Streamlit, Linux, MLflow.</p>
+        </section>
+
+        <section id="blog-about" class="section">
+            <h2>Research Philosophy</h2>
+            <p>This space documents my technical and ethical journey in Data Science. I believe that <strong>Integrity is the ultimate metric</strong>—my logs explore how we can code systems that reflect human values and create sustainable wealth through data.</p>
+        </section>
+
+        <section id="posts" class="section">
+            <h2>Technical Notes</h2>
+            <p><strong>[Log 01-15-2026]:</strong> Establishing the Digital Citadel. Transitioning from abstract ML theory to scalable architectural deployment.</p>
+            <p><strong>[Log 01-14-2026]:</strong> Defining Node Features for Relational Capital. Why Inductive Learning is the future of Fintech.</p>
+        </section>
+
+        <section id="contact" class="section">
+            <h2>Secure Transmission</h2>
+            <p>Available for <strong>High-Level AI/ML Freelancing</strong> and Research Collaborations.</p>
+            <p>Direct: <strong style="color:var(--accent)">admin@dishasingh.xyz</strong></p>
+        </section>
+
+        <section id="contact-blog" class="section">
+            <h2>Engineering Collaboration</h2>
+            <p>Reach out for discussions regarding Relational Intelligence or Graph Theory.</p>
+        </section>
+
     </main>
 
+    <script>
+        function switchMain(mode) {
+            document.querySelectorAll('.main-nav button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('nav-' + mode).classList.add('active');
+            const subPort = document.getElementById('sub-portfolio');
+            const subBlog = document.getElementById('sub-blog');
+            if(mode === 'portfolio') {
+                subPort.classList.remove('hidden');
+                subBlog.classList.add('hidden');
+                showSection('about');
+            } else {
+                subPort.classList.add('hidden');
+                subBlog.classList.remove('hidden');
+                showSection('blog-about');
+            }
+        }
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            const target = document.getElementById(id);
+            if(target) target.classList.add('active');
+            if (event && event.target && event.target.tagName === 'BUTTON') {
+                document.querySelectorAll('.sub-nav button').forEach(btn => btn.classList.remove('active'));
+                event.target.classList.add('active');
+            }
+        }
+    </script>
 </body>
 </html>
